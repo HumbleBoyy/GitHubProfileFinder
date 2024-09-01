@@ -11,7 +11,6 @@ $(document).ready(function(){
                 client_secret:"462dfd128bef9fdf4810313761b9777762425b28"
             }
         }).done(function(user){
-            console.log(repos)
             $.ajax({
                 url:'https://api.github.com/users/'+userName+'/repos',
                 data:{
@@ -33,8 +32,8 @@ $(document).ready(function(){
                                 <span class="badge badge-success">Watchers: ${repo.watchers_count}</span>
                                 <span class="badge badge-info">Stars: ${repo.stargazers_count}</span>
                           </div>
-                          <div class="col-md-2">
-                            <a href="${repo.html_url}" target="_blank" class="btn btn-default">Repo Page</a>
+                          <div class="col-md-2 mt-1">
+                            <a href="${repo.html_url}" target="_blank" class="btn btn-primary">Repo Page</a>
                           </div> 
                         </div>
                       </div>
