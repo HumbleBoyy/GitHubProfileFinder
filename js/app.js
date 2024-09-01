@@ -8,10 +8,39 @@ $(document).ready(function(){
             url:'https://api.github.com/users/'+userName,
             data:{
                 client_id:"Ov23lihR8bCCl8xecdyI",
-                client_secret:"0200c80294c0b4ef418415d3f853ff1ea0260c55"
+                client_secret:"462dfd128bef9fdf4810313761b9777762425b28"
             }
         }).done(function(user){
-            console.log(user)
+            console.log(repos)
+            $.ajax({
+                url:'https://api.github.com/users/'+userName+'/repos',
+                data:{
+                    client_id:"Ov23lihR8bCCl8xecdyI",
+                    client_secret:"462dfd128bef9fdf4810313761b9777762425b28",
+                    sort:'created: asc',
+                    per_page: 5
+                }
+            }).done(function(repos){
+                $.each(repos, function(index, repo){
+                  $('#repos').append(`
+                      <div class="weell">
+                        <div class="row">
+                          <div class="col-md-7">
+                            <strong>${repo.name}</strong>: ${repo.description}
+                          </div>
+                          <div class="col-md-3">
+                               <span class="badge badge-dark">Forks: ${repo.forks_count}</span>
+                                <span class="badge badge-success">Watchers: ${repo.watchers_count}</span>
+                                <span class="badge badge-info">Stars: ${repo.stargazers_count}</span>
+                          </div>
+                          <div class="col-md-2">
+                            <a href="${repo.html_url}" target="_blank" class="btn btn-default">Repo Page</a>
+                          </div> 
+                        </div>
+                      </div>
+                    `)
+                })
+            });
            $('#profile').html(`
                <div class="panel panel-default">
                    <div class="panel-heading">
@@ -43,6 +72,9 @@ $(document).ready(function(){
                       </div>
                    </div>
                </div>
+
+               <h3 class="page-header">Latest Repos</h3>
+               <div id="repos"></div>
             `);
         })
     })
